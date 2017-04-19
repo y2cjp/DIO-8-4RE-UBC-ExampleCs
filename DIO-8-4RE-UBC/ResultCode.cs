@@ -1,7 +1,7 @@
-﻿// 
+﻿// --------------------------------------------------------------------------------------------------------------------
 // Copyright (c) 2017 Y2 Corporation
 // 
-// All rights reserved. 
+// All rights reserved.
 // 
 // MIT License
 // 
@@ -21,12 +21,13 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// 
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace Y2C_I2C_Libraries {
-
-    public enum ResultCode {
-        OK,
+namespace DIO_8_4RE_UBC
+{
+    public enum ResultCode
+    {
+        Ok,
         InvalidHandle,
         DeviceNotFound,
         DeviceNotOpened,
@@ -51,17 +52,17 @@ namespace Y2C_I2C_Libraries {
         ClkNotSupported,            // spi master do not support 80MHz/CLK_2
         VenderCmdNotSupported,
         IsNotSpiMode,
-        IsNotI2cMode,
+        IsNotI2CMode,
         IsNotSpiSingleMode,
         IsNotSpiMultiMode,
-        WrongI2cAddr,
-        InvaildFunction,
+        WrongI2CAddr,
+        InvalidFunction,
         InvalidPointer,
         ExceededMaxTransferSize,
         FailedToReadDevice,
-        I2cNotSupportedInThisMode,
+        I2CNotSupportedInThisMode,
         GpioNotSupportedInThisMode,
-        GpioExceededMaxPortnum,
+        GpioExceededMaxPortNum,
         GpioWriteNotSupported,
         GpioPullupInvalidInInputmode,
         GpioPulldownInvalidInInputmode,
@@ -71,16 +72,15 @@ namespace Y2C_I2C_Libraries {
         EventNotSupported,
         FunNotSupport,
 
-        I2cmControllerBusy = 2000,
-        I2cmDataNack,
-        I2cmAddressNack,
-        I2cmArbLost,
-        I2cmBusBusy,
-        I2cmTimeout,
+        I2CmControllerBusy = 2000,
+        I2CmDataNack,
+        I2CmAddressNack,
+        I2CmArbLost,
+        I2CmBusBusy,
+        I2CmTimeout,
 
         InvalidChipVersion,
         InvalidDllVersion,
-        FatalError,
+        FatalError
     }
-
 }

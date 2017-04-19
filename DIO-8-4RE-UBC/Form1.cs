@@ -1,7 +1,7 @@
-﻿// 
+﻿// --------------------------------------------------------------------------------------------------------------------
 // Copyright (c) 2017 Y2 Corporation
 // 
-// All rights reserved. 
+// All rights reserved.
 // 
 // MIT License
 // 
@@ -21,274 +21,317 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// 
+// --------------------------------------------------------------------------------------------------------------------
+
 using System;
 using System.Windows.Forms;
-using Y2C_I2C_Libraries;
 
-namespace DIO_8_4RE_UBC {
+namespace DIO_8_4RE_UBC
+{
+    /// <summary>
+    /// Form 1
+    /// </summary>
+    public partial class Form1 : Form
+    {
+        private I2CFt4222 i2C;
+        private Dio84 dio84Re;    // DIO-8/4RE-UBC
+        private Dio84 dio84Rd;    // DIO-8/4RD-IRC
+        private Dio016 dio016Rc;  // DIO-0/16RC-IRC
+        private Aio320 aio320Ra;  // AIO-32/0RA-IRC
 
-    public partial class Form1 : Form {
-
-        private I2C_FT4222 i2c;
-        private DIO_8_4 dio84re;    // DIO-8/4RE-UBC
-        private DIO_8_4 dio84rd;    // DIO-8/4RD-IRC
-        private DIO_0_16 dio016rc;  // DIO-0/16RC-IRC
-        private AIO_32_0 aio320ra;  // AIO-32/0RA-IRC
-
-        public Form1() {
+        public Form1()
+        {
             InitializeComponent();
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
-            I2C_Close();
-        }
-
-        public void Print(string text) {
+        public void Print(string text)
+        {
+            if (printTextBox == null || text == null) return;
             printTextBox.AppendText(text);
             Application.DoEvents();
         }
 
-        public void Println(string text) {
+        public void Println(string text)
+        {
             Print(text + Environment.NewLine);
         }
 
-        private ResultCode I2C_Open() {
-            if (i2c != null)
-                return ResultCode.OK;
-            i2c = new I2C_FT4222();
-            ResultCode result = i2c.Open();
-            if (result != ResultCode.OK) {
-                MessageBox.Show(result.ToString());
-                I2C_Close();
-            }
+        private ResultCode I2COpen()
+        {
+            if (i2C != null)
+                return ResultCode.Ok;
+            i2C = new I2CFt4222();
+            var result = i2C.Open();
+            if (result == ResultCode.Ok)
+                return result;
+            MessageBox.Show(result.ToString());
+            I2CClose();
             return result;
         }
 
-        private ResultCode I2C_Close() {
-            if (i2c == null)
-                return ResultCode.OK;
-            ResultCode result = i2c.Close();
-            if (result != ResultCode.OK) {
-                Println("I2C Close NG: " + result.ToString());
-            } else {
-                //Println("Close OK");
-            }
-            i2c = null;
-            return result;
+        private void I2CClose()
+        {
+            if (i2C == null) return;
+            var result = i2C.Close();
+            if (result != ResultCode.Ok)
+                Println("I2C Close NG: " + result);
+            i2C = null;
         }
 
-        // *****************************************************
-        // DIO-8/4RE-UBC
-        // *****************************************************
+        //// *****************************************************
+        //// DIO-8/4RE-UBC
+        //// *****************************************************
 
-        private ResultCode Dio84reInitialize() {
+        private ResultCode Dio84ReInitialize()
+        {
             ResultCode result;
-            if (i2c == null) {
-                result = I2C_Open();
-                if (result != ResultCode.OK)
+            if (i2C == null)
+            {
+                result = I2COpen();
+                if (result != ResultCode.Ok)
                     return result;
             }
-            if (dio84re == null) {
-                dio84re = new DIO_8_4(i2c, Convert.ToByte(dio84reAddressTextBox.Text, 16));
-            }
-            result = dio84re.Initialize();
-            if (result != ResultCode.OK) {
+
+            if (dio84Re == null)
+                dio84Re = new Dio84(i2C, Convert.ToByte(dio84reAddressTextBox.Text, 16));
+            result = dio84Re.Initialize();
+            if (result != ResultCode.Ok)
                 MessageBox.Show(result.ToString());
-            } else {
+            else
                 Println("DIO-8/4RE-UBC: Initialize OK");
-            }
             return result;
         }
 
-        private void dio84reInitializeButton_Click(object sender, EventArgs e) {
-            Dio84reInitialize();
+        private void Dio84ReInitializeButtonClick(object sender, EventArgs e)
+        {
+            Dio84ReInitialize();
         }
 
-        private void dio84reReadButton_Click(object sender, EventArgs e) {
+        private void Dio84ReReadButtonClick(object sender, EventArgs e)
+        {
             ResultCode result;
-            if ((dio84re == null) || !dio84re.IsInitialized) {
-                result = Dio84reInitialize();
-                if (result != ResultCode.OK)
+            if (!dio84Re?.IsInitialized != true)
+            {
+                result = Dio84ReInitialize();
+                if (result != ResultCode.Ok)
                     return;
             }
+
             byte value;
-            result = dio84re.ReadPort(out value);
-            if (result != ResultCode.OK) {
+            if (dio84Re == null)
+                return;
+            result = dio84Re.ReadPort(out value);
+            if (result != ResultCode.Ok)
+            {
                 MessageBox.Show(result.ToString());
                 return;
             }
-            dio84reReadTextBox.Text = "0x" + value.ToString("x2");
+
+            dio84reReadTextBox.Text = @"0x" + value.ToString("x2");
             Println("DIO-8/4RE-UBC: Read OK");
         }
 
-        private void dio84reWriteButton_Click(object sender, EventArgs e) {
+        private void Dio84ReWriteButtonClick(object sender, EventArgs e)
+        {
             ResultCode result;
-            if ((dio84re == null) || !dio84re.IsInitialized) {
-                result = Dio84reInitialize();
-                if (result != ResultCode.OK)
+            if (!dio84Re?.IsInitialized != true)
+            {
+                result = Dio84ReInitialize();
+                if (result != ResultCode.Ok)
                     return;
             }
+
             if (string.IsNullOrEmpty(dio84reWriteTextBox.Text))
-                dio84reWriteTextBox.Text = "0";
-            byte value = Convert.ToByte(dio84reWriteTextBox.Text, 16);
-            dio84reWriteTextBox.Text = "0x" + value.ToString("x2");
-            result = dio84re.WritePort(value);
-            if (result != ResultCode.OK) {
+                dio84reWriteTextBox.Text = @"0";
+            var value = Convert.ToByte(dio84reWriteTextBox.Text, 16);
+            dio84reWriteTextBox.Text = @"0x" + value.ToString("x2");
+
+            if (dio84Re == null)
+                return;
+            result = dio84Re.WritePort(value);
+            if (result != ResultCode.Ok)
                 MessageBox.Show(result.ToString());
-            } else {
-                Println("DIO-8/4RE-UBC: Write OK");
-            }
+            else Println("DIO-8/4RE-UBC: Write OK");
         }
 
-        // *****************************************************
-        // DIO-8/4RD-IRC
-        // *****************************************************
+        //// *****************************************************
+        //// DIO-8/4RD-IRC
+        //// *****************************************************
 
-        private ResultCode Dio84rdInitialize() {
+        private ResultCode Dio84RdInitialize()
+        {
             ResultCode result;
-            if (i2c == null) {
-                result = I2C_Open();
-                if (result != ResultCode.OK)
+            if (i2C == null)
+            {
+                result = I2COpen();
+                if (result != ResultCode.Ok)
                     return result;
             }
-            if (dio84rd == null) {
-                dio84rd = new DIO_8_4(i2c, Convert.ToByte(dio84rdAddressTextBox.Text, 16));
-            }
-            result = dio84rd.Initialize();
-            if (result != ResultCode.OK) {
+
+            if (dio84Rd == null)
+                dio84Rd = new Dio84(i2C, Convert.ToByte(dio84rdAddressTextBox.Text, 16));
+
+            result = dio84Rd.Initialize();
+            if (result != ResultCode.Ok)
                 MessageBox.Show(result.ToString());
-            } else {
-                Println("DIO-8/4RD-IRC: Initialize OK");
-            }
+            else Println("DIO-8/4RD-IRC: Initialize OK");
+
             return result;
         }
 
-        private void dio84rdInitializeButton_Click(object sender, EventArgs e) {
-            Dio84rdInitialize();
+        private void Dio84RdInitializeButtonClick(object sender, EventArgs e)
+        {
+            Dio84RdInitialize();
         }
 
-        private void dio84rdReadButton_Click(object sender, EventArgs e) {
+        private void Dio84RdReadButtonClick(object sender, EventArgs e)
+        {
             ResultCode result;
-            if ((dio84rd == null) || !dio84rd.IsInitialized) {
-                result = Dio84rdInitialize();
-                if (result != ResultCode.OK)
+            if (!dio84Rd?.IsInitialized != true)
+            {
+                result = Dio84RdInitialize();
+                if (result != ResultCode.Ok)
                     return;
             }
+
             byte value;
-            result = dio84rd.ReadPort(out value);
-            if (result != ResultCode.OK) {
+            if (dio84Rd == null)
+                return;
+            result = dio84Rd.ReadPort(out value);
+            if (result != ResultCode.Ok)
+            {
                 MessageBox.Show(result.ToString());
                 return;
             }
-            dio84rdReadTextBox.Text = "0x" + value.ToString("x2");
+
+            dio84rdReadTextBox.Text = @"0x" + value.ToString("x2");
             Println("DIO-8/4RD-IRC: Read OK");
         }
 
-        private void dio84rdWriteButton_Click(object sender, EventArgs e) {
+        private void Dio84RdWriteButtonClick(object sender, EventArgs e)
+        {
             ResultCode result;
-            if ((dio84rd == null) || !dio84rd.IsInitialized) {
-                result = Dio84rdInitialize();
-                if (result != ResultCode.OK)
+            if (!dio84Rd?.IsInitialized != true)
+            {
+                result = Dio84RdInitialize();
+                if (result != ResultCode.Ok)
                     return;
             }
+
             if (string.IsNullOrEmpty(dio84rdWriteTextBox.Text))
-                dio84rdWriteTextBox.Text = "0";
-            byte value = Convert.ToByte(dio84rdWriteTextBox.Text, 16);
-            dio84rdWriteTextBox.Text = "0x" + value.ToString("x2");
-            result = dio84rd.WritePort(value);
-            if (result != ResultCode.OK) {
+                dio84rdWriteTextBox.Text = @"0";
+            var value = Convert.ToByte(dio84rdWriteTextBox.Text, 16);
+            dio84rdWriteTextBox.Text = @"0x" + value.ToString("x2");
+            if (dio84Rd == null)
+                return;
+            result = dio84Rd.WritePort(value);
+            if (result != ResultCode.Ok)
                 MessageBox.Show(result.ToString());
-            } else {
-                Println("DIO-8/4RD-IRC: Write OK");
-            }
+            else Println("DIO-8/4RD-IRC: Write OK");
         }
 
-        // *****************************************************
-        // DIO-0/16RC-IRC
-        // *****************************************************
+        //// *****************************************************
+        //// DIO-0/16RC-IRC
+        //// *****************************************************
 
-        private ResultCode Dio016Initialize() {
+        private ResultCode Dio016Initialize()
+        {
             ResultCode result;
-            if (i2c == null) {
-                result = I2C_Open();
-                if (result != ResultCode.OK)
+            if (i2C == null)
+            {
+                result = I2COpen();
+                if (result != ResultCode.Ok)
                     return result;
             }
-            if (dio016rc == null)
-                dio016rc = new DIO_0_16(i2c, Convert.ToByte(dio016rcAddressTextBox.Text, 16));
-            result = dio016rc.Initialize();
-            if (result != ResultCode.OK) {
+
+            if (dio016Rc == null)
+                dio016Rc = new Dio016(i2C, Convert.ToByte(dio016rcAddressTextBox.Text, 16));
+            result = dio016Rc.Initialize();
+            if (result != ResultCode.Ok)
                 MessageBox.Show(result.ToString());
-            } else {
-                Println("DIO-0/16RC-IRC: Initialize OK");
-            }
+            else Println("DIO-0/16RC-IRC: Initialize OK");
+
             return result;
         }
 
-        private void dio016rcInitializeButton_Click(object sender, EventArgs e) {
+        private void Dio016RcInitializeButtonClick(object sender, EventArgs e)
+        {
             Dio016Initialize();
         }
 
-        private void dio016rcWriteButton_Click(object sender, EventArgs e) {
+        private void Dio016RcWriteButtonClick(object sender, EventArgs e)
+        {
             ResultCode result;
-            if ((dio016rc == null) || !dio016rc.IsInitialized) {
+            if (!dio016Rc?.IsInitialized != true)
+            {
                 result = Dio016Initialize();
-                if (result != ResultCode.OK)
+                if (result != ResultCode.Ok)
                     return;
             }
+
             if (string.IsNullOrEmpty(dio016rcWriteTextBox.Text))
-                dio016rcWriteTextBox.Text = "0";
-            uint value = Convert.ToUInt32(dio016rcWriteTextBox.Text, 16);
-            dio016rcWriteTextBox.Text = "0x" + value.ToString("x4");
-            result = dio016rc.WriteAll(value);
-            if (result != ResultCode.OK) {
+                dio016rcWriteTextBox.Text = @"0";
+            var value = Convert.ToUInt32(dio016rcWriteTextBox.Text, 16);
+            dio016rcWriteTextBox.Text = @"0x" + value.ToString("x4");
+            if (dio016Rc == null)
+                return;
+            result = dio016Rc.WriteAll(value);
+            if (result != ResultCode.Ok)
                 MessageBox.Show(result.ToString());
-            } else {
-                Println("DIO-0/16RC-IRC: Write OK");
-            }
+            else Println("DIO-0/16RC-IRC: Write OK");
         }
 
-        // *****************************************************
-        // AIO-32/0RA-IRC
-        // *****************************************************
+        //// *****************************************************
+        //// AIO-32/0RA-IRC
+        //// *****************************************************
 
-        private ResultCode Aio320raInitialize() {
+        private ResultCode Aio320RaInitialize()
+        {
             ResultCode result;
-            if (i2c == null) {
-                result = I2C_Open();
-                if (result != ResultCode.OK)
+            if (i2C == null)
+            {
+                result = I2COpen();
+                if (result != ResultCode.Ok)
                     return result;
             }
-            if (aio320ra == null)
-                aio320ra = new AIO_32_0(i2c, Convert.ToByte(aio320raAdcAddressTextBox.Text, 16), Convert.ToByte(aio320raMuxAddressTextBox.Text, 16));
-            result = aio320ra.Initialize();
-            if (result != ResultCode.OK) {
+
+            if (aio320Ra == null)
+                aio320Ra = new Aio320(i2C, Convert.ToByte(aio320raAdcAddressTextBox.Text, 16), Convert.ToByte(aio320raMuxAddressTextBox.Text, 16));
+            result = aio320Ra.Initialize();
+            if (result != ResultCode.Ok)
                 MessageBox.Show(result.ToString());
-            } else {
-                Println("AIO-32/0RA-IRC: Initialize OK");
-            }
+            else Println("AIO-32/0RA-IRC: Initialize OK");
+
             return result;
         }
 
-        private void aio320raReadButton_Click(object sender, EventArgs e) {
+        private void Aio320RaReadButtonClick(object sender, EventArgs e)
+        {
             ResultCode result;
-            if ((aio320ra == null) || !aio320ra.IsInitialized) {
-                result = Aio320raInitialize();
-                if (result != ResultCode.OK)
+            if (!aio320Ra?.IsInitialized != true)
+            {
+                result = Aio320RaInitialize();
+                if (result != ResultCode.Ok)
                     return;
             }
-            float[] volt = new float[32];
-            result = aio320ra.ReadVoltage(0, volt, 32);
-            if (result != ResultCode.OK) {
+
+            var volt = new float[32];
+            if (aio320Ra == null) return;
+            result = aio320Ra.ReadVoltage(0, volt, 32);
+            if (result != ResultCode.Ok)
+            {
                 MessageBox.Show(result.ToString());
                 return;
             }
+
             Println("AIO-32/0RA-IRC: Read");
-            for (int ch = 0; ch < 32; ch++) {
-                Println(" AIN" + ch.ToString() + ": " + volt[ch].ToString("F3") + "V");
-            }
+            for (var ch = 0; ch < 32; ch++)
+                Println(" AIN" + ch + ": " + volt[ch].ToString("F3") + "V");
         }
 
+        private void Form1FormClosing(object sender, FormClosingEventArgs e)
+        {
+            I2CClose();
+        }
     }
 }
