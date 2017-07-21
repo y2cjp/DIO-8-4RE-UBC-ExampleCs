@@ -59,7 +59,7 @@ namespace DIO_8_4RE_UBC
             if (i2C == null)
                 return ResultCode.FatalError;
 
-            var result = i2C.Write(slaveAddress, ref writeBuffer[0], (ushort)writeBuffer.Length);
+            ResultCode result = i2C.Write(slaveAddress, ref writeBuffer[0], (ushort)writeBuffer.Length);
             if (result != ResultCode.Ok)
                 return result;
 
@@ -69,7 +69,7 @@ namespace DIO_8_4RE_UBC
 
         public ResultCode SetPinDirection(int pin, PinDirection pinDir)
         {
-            if (pin < 0 || pin > 7)
+            if (pin < 0 || 7 < pin)
                 return ResultCode.InvalidParameter;
 
             byte value;
@@ -87,8 +87,11 @@ namespace DIO_8_4RE_UBC
             if (i2C == null)
                 return ResultCode.FatalError;
 
-            var result = i2C.WriteEx(slaveAddress, (byte)LibFt4222.I2CMasterFlag.Start, ref writeBuffer[0], (ushort)writeBuffer.Length);
-            return result != ResultCode.Ok ? result : i2C.ReadEx(slaveAddress, (byte)(LibFt4222.I2CMasterFlag.RepeatedStart | LibFt4222.I2CMasterFlag.Stop), ref value, 1);
+            ResultCode result = i2C.WriteEx(slaveAddress, (byte)LibFt4222.I2CMasterFlag.Start, ref writeBuffer[0], (ushort)writeBuffer.Length);
+            if (result != ResultCode.Ok)
+                return result;
+
+            return i2C.ReadEx(slaveAddress, (byte)(LibFt4222.I2CMasterFlag.RepeatedStart | LibFt4222.I2CMasterFlag.Stop), ref value, 1);
         }
 
         public ResultCode ReadPort(out byte value)
@@ -99,10 +102,10 @@ namespace DIO_8_4RE_UBC
         public ResultCode ReadPin(int pin, out bool state)
         {
             state = true;
-            if (pin < 0 || pin > 7)
+            if (pin < 0 || 7 < pin)
                 return ResultCode.InvalidParameter;
             byte ip;
-            var result = ReadPort(out ip);
+            ResultCode result = ReadPort(out ip);
             state = (ip & (1 << pin)) != 0;
             return result;
         }
@@ -113,7 +116,7 @@ namespace DIO_8_4RE_UBC
             if (i2C == null)
                 return ResultCode.FatalError;
 
-            var result = i2C.Write(slaveAddress, ref writeBuffer[0], (ushort)writeBuffer.Length);
+            ResultCode result = i2C.Write(slaveAddress, ref writeBuffer[0], (ushort)writeBuffer.Length);
             if (result != ResultCode.Ok)
                 return result;
             outputValue = value;
@@ -122,7 +125,7 @@ namespace DIO_8_4RE_UBC
 
         public ResultCode WritePin(int pin, bool state)
         {
-            if (pin < 0 || pin > 7)
+            if (pin < 0 || 7 < pin)
                 return ResultCode.InvalidParameter;
             byte value;
             if (state)

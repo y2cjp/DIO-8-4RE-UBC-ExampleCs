@@ -31,9 +31,7 @@ namespace DIO_8_4RE_UBC
     public class Aio320
     {
         private readonly Pca9554 pca9554;   // Multiplexer
-
         private readonly Ads1115 ads1115;   // ADC
-
         private byte mux;
 
         public Aio320(I2CFt4222 i2C, byte adcAddress, byte muxAddress)
@@ -85,7 +83,7 @@ namespace DIO_8_4RE_UBC
             if (pca9554 == null)
                 return ResultCode.FatalError;
 
-            var result = pca9554.SetPortDirection(0x00);
+            ResultCode result = pca9554.SetPortDirection(0x00);
             if (result == ResultCode.Ok)
                 IsInitialized = true;
             return result;
@@ -132,7 +130,7 @@ namespace DIO_8_4RE_UBC
             if (pca9554 == null)
                 return ResultCode.FatalError;
 
-            var result = pca9554.WritePort(extMux);
+            ResultCode result = pca9554.WritePort(extMux);
             if (result != ResultCode.Ok)
                 return result;
 
@@ -151,10 +149,10 @@ namespace DIO_8_4RE_UBC
             if (value == null)
                 return ResultCode.FatalError;
 
-            for (var ch = startChannel; ch < startChannel + length; ch++)
+            for (int ch = startChannel; ch < startChannel + length; ch++)
             {
                 int tmp;
-                var result = ReadRaw(ch, out tmp, dataRate, pga);
+                ResultCode result = ReadRaw(ch, out tmp, dataRate, pga);
                 if (result != ResultCode.Ok)
                     return result;
                 value[ch - startChannel] = tmp;
@@ -168,11 +166,11 @@ namespace DIO_8_4RE_UBC
             if (volt == null)
                 return ResultCode.FatalError;
 
-            var value = new int[length];
-            var result = ReadRaw(startChannel, value, length, dataRate, pga);
+            int[] value = new int[length];
+            ResultCode result = ReadRaw(startChannel, value, length, dataRate, pga);
             if (result != ResultCode.Ok)
                 return result;
-            for (var ch = 0; ch < length; ch++)
+            for (int ch = 0; ch < length; ch++)
                 volt[ch] = ToVolt(value[ch], pga);
 
             return ResultCode.Ok;

@@ -31,7 +31,6 @@ namespace DIO_8_4RE_UBC
     public class Ads1115
     {
         private readonly I2CFt4222 i2C;
-
         private readonly byte slaveAddress;
 
         public Ads1115(I2CFt4222 i2C, byte slaveAddress)
@@ -129,7 +128,7 @@ namespace DIO_8_4RE_UBC
             if (i2C == null)
                 return ResultCode.FatalError;
 
-            var result = i2C.Write(slaveAddress, ref config[0], 3);
+            ResultCode result = i2C.Write(slaveAddress, ref config[0], 3);
             if (result != ResultCode.Ok)
                 return result;
 
@@ -168,7 +167,7 @@ namespace DIO_8_4RE_UBC
                     return ResultCode.FatalError;
             }
 
-            var readBuffer = new byte[2];
+            byte[] readBuffer = new byte[2];
             result = i2C.ReadEx(slaveAddress, (byte)(LibFt4222.I2CMasterFlag.RepeatedStart | LibFt4222.I2CMasterFlag.Stop), ref readBuffer[0], (ushort)readBuffer.Length);
             if (result != ResultCode.Ok)
                 return result;

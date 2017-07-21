@@ -9,10 +9,13 @@ using System.Windows.Forms;
 
 namespace DIO_8_4RE_UBC
 {
-    public static class Program
+    internal static class Program
     {
+        /// <summary>
+        /// アプリケーションのメイン エントリ ポイントです。
+        /// </summary>
         [STAThread]
-        public static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

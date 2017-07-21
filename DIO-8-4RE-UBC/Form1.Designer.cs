@@ -67,7 +67,7 @@
             this.dio84reInitializeButton.TabIndex = 2;
             this.dio84reInitializeButton.Text = "Initialize";
             this.dio84reInitializeButton.UseVisualStyleBackColor = true;
-            this.dio84reInitializeButton.Click += new System.EventHandler(this.Dio84ReInitializeButtonClick);
+            this.dio84reInitializeButton.Click += new System.EventHandler(this.dio84reInitializeButton_Click);
             // 
             // label1
             // 
@@ -103,7 +103,7 @@
             this.dio84reReadButton.TabIndex = 4;
             this.dio84reReadButton.Text = "Read";
             this.dio84reReadButton.UseVisualStyleBackColor = true;
-            this.dio84reReadButton.Click += new System.EventHandler(this.Dio84ReReadButtonClick);
+            this.dio84reReadButton.Click += new System.EventHandler(this.dio84reReadButton_Click);
             // 
             // dio84reWriteButton
             // 
@@ -113,7 +113,7 @@
             this.dio84reWriteButton.TabIndex = 6;
             this.dio84reWriteButton.Text = "Write";
             this.dio84reWriteButton.UseVisualStyleBackColor = true;
-            this.dio84reWriteButton.Click += new System.EventHandler(this.Dio84ReWriteButtonClick);
+            this.dio84reWriteButton.Click += new System.EventHandler(this.dio84reWriteButton_Click);
             // 
             // dio84reWriteTextBox
             // 
@@ -170,7 +170,7 @@
             this.dio016rcInitializeButton.TabIndex = 14;
             this.dio016rcInitializeButton.Text = "Initialize";
             this.dio016rcInitializeButton.UseVisualStyleBackColor = true;
-            this.dio016rcInitializeButton.Click += new System.EventHandler(this.Dio016RcInitializeButtonClick);
+            this.dio016rcInitializeButton.Click += new System.EventHandler(this.dio016rcInitializeButton_Click);
             // 
             // label3
             // 
@@ -206,7 +206,7 @@
             this.dio016rcWriteButton.TabIndex = 16;
             this.dio016rcWriteButton.Text = "Write";
             this.dio016rcWriteButton.UseVisualStyleBackColor = true;
-            this.dio016rcWriteButton.Click += new System.EventHandler(this.Dio016RcWriteButtonClick);
+            this.dio016rcWriteButton.Click += new System.EventHandler(this.dio016rcWriteButton_Click);
             // 
             // groupBox4
             // 
@@ -248,7 +248,7 @@
             this.aio320raReadButton.TabIndex = 19;
             this.aio320raReadButton.Text = "Read";
             this.aio320raReadButton.UseVisualStyleBackColor = true;
-            this.aio320raReadButton.Click += new System.EventHandler(this.Aio320RaReadButtonClick);
+            this.aio320raReadButton.Click += new System.EventHandler(this.aio320raReadButton_Click);
             // 
             // label4
             // 
@@ -309,7 +309,7 @@
             this.dio84rdInitializeButton.TabIndex = 8;
             this.dio84rdInitializeButton.Text = "Initialize";
             this.dio84rdInitializeButton.UseVisualStyleBackColor = true;
-            this.dio84rdInitializeButton.Click += new System.EventHandler(this.Dio84RdInitializeButtonClick);
+            this.dio84rdInitializeButton.Click += new System.EventHandler(this.dio84rdInitializeButton_Click);
             // 
             // dio84rdReadButton
             // 
@@ -319,7 +319,7 @@
             this.dio84rdReadButton.TabIndex = 10;
             this.dio84rdReadButton.Text = "Read";
             this.dio84rdReadButton.UseVisualStyleBackColor = true;
-            this.dio84rdReadButton.Click += new System.EventHandler(this.Dio84RdReadButtonClick);
+            this.dio84rdReadButton.Click += new System.EventHandler(this.dio84rdReadButton_Click);
             // 
             // label2
             // 
@@ -346,7 +346,7 @@
             this.dio84rdWriteButton.TabIndex = 12;
             this.dio84rdWriteButton.Text = "Write";
             this.dio84rdWriteButton.UseVisualStyleBackColor = true;
-            this.dio84rdWriteButton.Click += new System.EventHandler(this.Dio84RdWriteButtonClick);
+            this.dio84rdWriteButton.Click += new System.EventHandler(this.dio84rdWriteButton_Click);
             // 
             // Form1
             // 
@@ -360,7 +360,7 @@
             this.Controls.Add(this.printTextBox);
             this.Name = "Form1";
             this.Text = "DIO-8/4RE-UBC Sample";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);

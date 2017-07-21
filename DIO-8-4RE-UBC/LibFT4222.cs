@@ -239,7 +239,8 @@ namespace DIO_8_4RE_UBC
             ////
             //// **************************************************************************
 
-            // FT4222 General Functions
+            //// FT4222 General Functions
+
             [DllImport("LibFt4222.dll", CallingConvention = CallingConvention.Cdecl)]
             public static extern Ft4222Status FT4222_UnInitialize(IntPtr ftHandle);
 
@@ -267,14 +268,15 @@ namespace DIO_8_4RE_UBC
             [DllImport("LibFt4222.dll", CallingConvention = CallingConvention.Cdecl)]
             public static extern Ft4222Status FT4222_GetVersion(IntPtr ftHandle, ref Ft4222Version pVersion);
 
-            // FT4222 SPI Functions
+            //// FT4222 SPI Functions
+
             [DllImport("LibFt4222.dll", CallingConvention = CallingConvention.Cdecl)]
             public static extern Ft4222Status FT4222_SPIMaster_Init(
                 IntPtr ftHandle,
                 Ft4222SpiMode ioLine,
                 Ft4222SpiClock clock,
-                Ft4222SpiCpol cPol,
-                Ft4222SpiCpha cPha,
+                Ft4222SpiCpol cpol,
+                Ft4222SpiCpha cpha,
                 byte ssoMap);
 
             [DllImport("LibFt4222.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -293,7 +295,8 @@ namespace DIO_8_4RE_UBC
                 ref ushort sizeTransferred,
                 bool isEndTransaction);
 
-            // FT4222 I2C Functions
+            //// FT4222 I2C Functions
+
             [DllImport("LibFt4222.dll", CallingConvention = CallingConvention.Cdecl)]
             public static extern Ft4222Status FT4222_I2CMaster_Init(IntPtr ftHandle, uint kbps);
 

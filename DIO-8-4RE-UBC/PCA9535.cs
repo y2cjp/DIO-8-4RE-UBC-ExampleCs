@@ -32,14 +32,15 @@ namespace DIO_8_4RE_UBC
     {
         private const byte PortMax = 1;
 
+        private readonly I2CFt4222 i2C;
+        private readonly byte slaveAddress;
         private readonly byte[] outputValue = { 0xff, 0xff };
-
         private readonly byte[] portDirection = { 0xff, 0xff };
 
         public Pca9535(I2CFt4222 i2C, byte slaveAddress)
         {
-            I2C = i2C;
-            SlaveAddress = slaveAddress;
+            this.i2C = i2C;
+            this.slaveAddress = slaveAddress;
         }
 
         public enum Register : byte
@@ -56,30 +57,26 @@ namespace DIO_8_4RE_UBC
             Input
         }
 
-        private I2CFt4222 I2C { get; }
-
-        private byte SlaveAddress { get; }
-
         public ResultCode SetPortDirection(int port, byte[] value, int index, int length)
         {
             if (port < 0 || PortMax < port || length < 1 || PortMax + 1 < port + length)
                 return ResultCode.InvalidParameter;
-            var writeBuffer = new byte[length + 1];
+            byte[] writeBuffer = new byte[length + 1];
             writeBuffer[0] = (byte)(Register.IoConfiguration0 + (byte)port);
             if (value == null)
                 return ResultCode.FatalError;
 
             Array.Copy(value, index, writeBuffer, 1, length);
-            if (I2C == null)
+            if (i2C == null)
                 return ResultCode.FatalError;
 
-            var result = I2C.Write(SlaveAddress, ref writeBuffer[0], (ushort)writeBuffer.Length);
+            ResultCode result = i2C.Write(slaveAddress, ref writeBuffer[0], (ushort)writeBuffer.Length);
             if (result != ResultCode.Ok)
                 return result;
-            if (this.portDirection == null)
+            if (portDirection == null)
                 return ResultCode.FatalError;
 
-            Array.Copy(value, index, this.portDirection, port, length);
+            Array.Copy(value, index, portDirection, port, length);
             return ResultCode.Ok;
         }
 
@@ -91,7 +88,7 @@ namespace DIO_8_4RE_UBC
 
         public ResultCode SetPinDirection(int port, int pin, PinDirection pinDir)
         {
-            if (port < 0 || PortMax < port || pin < 0 || pin > 7)
+            if (port < 0 || PortMax < port || pin < 0 || 7 < pin)
                 return ResultCode.InvalidParameter;
 
             if (portDirection == null)
@@ -108,21 +105,29 @@ namespace DIO_8_4RE_UBC
         public ResultCode ReadRegister(Register register, byte[] value, int index, int length)
         {
             byte[] writeBuffer = { (byte)register };
-            var result = I2CWriteEx(SlaveAddress, (byte)LibFt4222.I2CMasterFlag.Start, ref writeBuffer[0], (ushort)writeBuffer.Length);
+            ResultCode result = I2CWriteEx(slaveAddress, (byte)LibFt4222.I2CMasterFlag.Start, ref writeBuffer[0], (ushort)writeBuffer.Length);
             if (value == null)
                 return ResultCode.FatalError;
 
-            return result != ResultCode.Ok ? result : I2CReadEx(SlaveAddress, (byte)(LibFt4222.I2CMasterFlag.RepeatedStart | LibFt4222.I2CMasterFlag.Stop), ref value[index], length);
+            if (result != ResultCode.Ok)
+                return result;
+            return I2CReadEx(slaveAddress, (byte)(LibFt4222.I2CMasterFlag.RepeatedStart | LibFt4222.I2CMasterFlag.Stop), ref value[index], length);
         }
 
         public ResultCode I2CWriteEx(ushort deviceAddress, byte flag, ref byte buffer, int bytesToWrite)
         {
-            return I2C?.WriteEx(deviceAddress, flag, ref buffer, bytesToWrite) ?? ResultCode.FatalError;
+            // return i2C?.WriteEx(deviceAddress, flag, ref buffer, bytesToWrite) ?? ResultCode.FatalError; // C# 6.0 or later
+            if (i2C == null)
+                return ResultCode.FatalError;
+            return i2C.WriteEx(deviceAddress, flag, ref buffer, bytesToWrite);
         }
 
         public ResultCode I2CReadEx(ushort deviceAddress, byte flag, ref byte buffer, int bytesToRead)
         {
-            return I2C?.ReadEx(deviceAddress, flag, ref buffer, bytesToRead) ?? ResultCode.FatalError;
+            // return i2C?.ReadEx(deviceAddress, flag, ref buffer, bytesToRead) ?? ResultCode.FatalError;   // C# 6.0 or later
+            if (i2C == null)
+                return ResultCode.FatalError;
+            return i2C.ReadEx(deviceAddress, flag, ref buffer, bytesToRead);
         }
 
         public ResultCode ReadPort(int port, byte[] value, int index, int length)
@@ -134,8 +139,8 @@ namespace DIO_8_4RE_UBC
 
         public ResultCode ReadPort(int port, out byte value)
         {
-            var buffer = new byte[1];
-            var result = ReadPort(port, buffer, 0, 1);
+            byte[] buffer = new byte[1];
+            ResultCode result = ReadPort(port, buffer, 0, 1);
             value = buffer[0];
             return result;
         }
@@ -143,10 +148,10 @@ namespace DIO_8_4RE_UBC
         public ResultCode ReadPin(int port, int pin, out bool state)
         {
             state = true;
-            if (port < 0 || PortMax < port || pin < 0 || pin > 7)
+            if (port < 0 || PortMax < port || pin < 0 || 7 < pin)
                 return ResultCode.InvalidParameter;
             byte ip;
-            var result = ReadPort(port, out ip);
+            ResultCode result = ReadPort(port, out ip);
             state = (ip & (1 << pin)) != 0;
             return result;
         }
@@ -155,25 +160,28 @@ namespace DIO_8_4RE_UBC
         {
             if (port < 0 || PortMax < port || length < 1 || PortMax + 1 < port + length)
                 return ResultCode.InvalidParameter;
-            var writeBuffer = new byte[length + 1];
+            byte[] writeBuffer = new byte[length + 1];
             writeBuffer[0] = (byte)(Register.OutputPort0 + (byte)port);
             if (value == null)
                 return ResultCode.FatalError;
 
             Array.Copy(value, index, writeBuffer, 1, length);
-            var result = I2CWrite(SlaveAddress, ref writeBuffer[0], (ushort)writeBuffer.Length);
+            ResultCode result = I2CWrite(slaveAddress, ref writeBuffer[0], (ushort)writeBuffer.Length);
             if (result != ResultCode.Ok)
                 return result;
-            if (this.outputValue == null)
+            if (outputValue == null)
                 return ResultCode.FatalError;
 
-            Array.Copy(value, index, this.outputValue, port, length);
+            Array.Copy(value, index, outputValue, port, length);
             return ResultCode.Ok;
         }
 
-        public ResultCode I2CWrite(ushort slaveAddress, ref byte buffer, int bytesToWrite)
+        public ResultCode I2CWrite(ushort slaveAddr, ref byte buffer, int bytesToWrite)
         {
-            return I2C?.Write(slaveAddress, ref buffer, bytesToWrite) ?? ResultCode.FatalError;
+            // return i2C?.Write(slaveAddr, ref buffer, bytesToWrite) ?? ResultCode.FatalError; // C# 6.0 or later
+            if (i2C == null)
+                return ResultCode.FatalError;
+            return i2C.Write(slaveAddr, ref buffer, bytesToWrite);
         }
 
         public ResultCode WritePort(int port, byte value)
@@ -184,16 +192,16 @@ namespace DIO_8_4RE_UBC
 
         public ResultCode WritePin(int port, int pin, bool state)
         {
-            if (port < 0 || PortMax < port || pin < 0 || pin > 7)
+            if (port < 0 || PortMax < port || pin < 0 || 7 < pin)
                 return ResultCode.InvalidParameter;
-            if (this.outputValue == null)
+            if (outputValue == null)
                 return ResultCode.FatalError;
 
             byte value;
             if (state)
-                value = (byte)(this.outputValue[port] | (1 << pin));
+                value = (byte)(outputValue[port] | (1 << pin));
             else
-                value = (byte)(this.outputValue[port] & ~(1 << pin));
+                value = (byte)(outputValue[port] & ~(1 << pin));
             return WritePort(port, value);
         }
     }

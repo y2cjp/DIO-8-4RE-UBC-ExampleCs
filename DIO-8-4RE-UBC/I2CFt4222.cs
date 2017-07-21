@@ -46,7 +46,7 @@ namespace DIO_8_4RE_UBC
         public ResultCode Open()
         {
             // variable
-            var devInfo = new FTDI.FT_DEVICE_INFO_NODE();
+            FTDI.FT_DEVICE_INFO_NODE devInfo = new FTDI.FT_DEVICE_INFO_NODE();
             ftHandle = new IntPtr();
 
             // Check device
@@ -55,8 +55,8 @@ namespace DIO_8_4RE_UBC
 
             if (numOfDevices > 0)
             {
-                var serialNumber = new byte[16];
-                var desc = new byte[64];
+                byte[] serialNumber = new byte[16];
+                byte[] desc = new byte[64];
 
                 LibFt4222.NativeMethods.FT_GetDeviceInfoDetail(0, ref devInfo.Flags, ref devInfo.Type, ref devInfo.ID, ref devInfo.LocId, serialNumber, desc, ref devInfo.ftHandle);
 
@@ -74,7 +74,7 @@ namespace DIO_8_4RE_UBC
             }
 
             // Open device
-            var ftStatus = LibFt4222.NativeMethods.FT_OpenEx(devInfo.LocId, LibFt4222.NativeMethods.FtOpenByLocation, ref ftHandle);
+            FTDI.FT_STATUS ftStatus = LibFt4222.NativeMethods.FT_OpenEx(devInfo.LocId, LibFt4222.NativeMethods.FtOpenByLocation, ref ftHandle);
             if (ftStatus != FTDI.FT_STATUS.FT_OK)
             {
                 Debug.Print("Open NG: " + ftStatus + " ***");
@@ -82,8 +82,8 @@ namespace DIO_8_4RE_UBC
             }
 
             // Set FT4222 clock
-            var ft4222Clock = LibFt4222.Ft4222ClockRate.SysClk24;
-            var result = (ResultCode)LibFt4222.NativeMethods.FT4222_SetClock(ftHandle, LibFt4222.Ft4222ClockRate.SysClk24);
+            LibFt4222.Ft4222ClockRate ft4222Clock = LibFt4222.Ft4222ClockRate.SysClk24;
+            ResultCode result = (ResultCode)LibFt4222.NativeMethods.FT4222_SetClock(ftHandle, LibFt4222.Ft4222ClockRate.SysClk24);
             if (result != ResultCode.Ok)
             {
                 Debug.Print("SetClock NG: " + result + " ***");
@@ -118,10 +118,10 @@ namespace DIO_8_4RE_UBC
         {
             if (ftHandle == IntPtr.Zero)
                 return ResultCode.Ok;
-            var status = LibFt4222.NativeMethods.FT4222_UnInitialize(ftHandle);
+            LibFt4222.Ft4222Status status = LibFt4222.NativeMethods.FT4222_UnInitialize(ftHandle);
             if (status != LibFt4222.Ft4222Status.Ft4222Ok)
                 Debug.Print(status.ToString());
-            var ftStatus = LibFt4222.NativeMethods.FT_Close(ftHandle);
+            FTDI.FT_STATUS ftStatus = LibFt4222.NativeMethods.FT_Close(ftHandle);
             if (ftStatus != FTDI.FT_STATUS.FT_OK)
                 Debug.Print(ftStatus.ToString());
             ftHandle = IntPtr.Zero;
@@ -137,13 +137,7 @@ namespace DIO_8_4RE_UBC
         public ResultCode ReadEx(ushort deviceAddress, byte flag, ref byte buffer, int bytesToRead)
         {
             ushort sizeTransferred = 0;
-            var result = LibFt4222.NativeMethods.FT4222_I2CMaster_ReadEx(
-                ftHandle,
-                deviceAddress,
-                flag,
-                ref buffer,
-                (ushort)bytesToRead,
-                ref sizeTransferred);
+            LibFt4222.Ft4222Status result = LibFt4222.NativeMethods.FT4222_I2CMaster_ReadEx(ftHandle, deviceAddress, flag, ref buffer, (ushort)bytesToRead, ref sizeTransferred);
             if (result != LibFt4222.Ft4222Status.Ft4222Ok)
                 return (ResultCode)result;
 
@@ -175,7 +169,7 @@ namespace DIO_8_4RE_UBC
             LibFt4222.Ft4222Status result;
             byte status = 0;
 
-            for (var wait = 0; wait < int.MaxValue; wait++)
+            for (int wait = 0; wait < int.MaxValue; wait++)
             {
                 result = LibFt4222.NativeMethods.FT4222_I2CMaster_GetStatus(ftHandle, ref status);
                 if (result != LibFt4222.Ft4222Status.Ft4222Ok)
@@ -191,8 +185,8 @@ namespace DIO_8_4RE_UBC
             if (result != LibFt4222.Ft4222Status.Ft4222Ok)
                 return (ResultCode)result;
 #if waitWriteBusy
-            var lastResult = ResultCode.Ok;
-            for (var wait = 0; wait < int.MaxValue; wait++)
+            ResultCode lastResult = ResultCode.Ok;
+            for (int wait = 0; wait < int.MaxValue; wait++)
             {
                 result = LibFt4222.NativeMethods.FT4222_I2CMaster_GetStatus(ftHandle, ref status);
                 if (result != LibFt4222.Ft4222Status.Ft4222Ok)

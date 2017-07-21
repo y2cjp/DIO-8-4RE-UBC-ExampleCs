@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Dio016.cs" company="Y2 Corporation">
-//   Copyright (c) 2017 Y2 Corporation and Future Technology Devices International Limited. All rights reserved.
+//   Copyright (c) 2017 Y2 Corporation. All rights reserved.
 // </copyright>
 // <license>
 //   MIT License
@@ -48,7 +48,7 @@ namespace DIO_8_4RE_UBC
         {
             // 接続状態確認の為、ダミーリード
             byte value;
-            var result = IoExpanderReadPort(0, out value);
+            ResultCode result = IoExpanderReadPort(0, out value);
             if (result != ResultCode.Ok)
                 return result;
 
@@ -68,46 +68,42 @@ namespace DIO_8_4RE_UBC
         {
             if (!IsInitialized)
             {
-                var result = Initialize();
+                ResultCode result = Initialize();
                 if (result != ResultCode.Ok)
                     return result;
             }
 
-            var valueByte = new[]
-            {
-                (byte)(~value & 0xff),
-                (byte)(~(value >> 8) & 0xff)
-            };
+            byte[] valueByte = { (byte)(~value & 0xff), (byte)(~(value >> 8) & 0xff) };
             return IoExpanderWritePort(0, valueByte, 0, valueByte.Length);
         }
 
         public ResultCode WritePort(int port, byte value)
         {
-            if (port < 0 || port > 1)
+            if (port < 0 || 1 < port)
                 return ResultCode.InvalidParameter;
             if (!IsInitialized)
             {
-                var result = Initialize();
+                ResultCode result = Initialize();
                 if (result != ResultCode.Ok)
                     return result;
             }
 
             value = (byte)~value;
-            return ioExpander?.WritePort(port, value) ?? ResultCode.FatalError;
+            return IoExpanderWritePort(port, value);
         }
 
         public ResultCode WritePin(int pin, PinState pinState)
         {
-            if (pin < 0 || pin > 15)
+            if (pin < 0 || 15 < pin)
                 return ResultCode.InvalidParameter;
             if (!IsInitialized)
             {
-                var result = Initialize();
+                ResultCode result = Initialize();
                 if (result != ResultCode.Ok)
                     return result;
             }
 
-            var state = pinState == PinState.Off;
+            bool state = pinState == PinState.Off;
             int devicePort, devicePin;
             PinToDevicePin(pin, out devicePort, out devicePin);
 
@@ -116,7 +112,10 @@ namespace DIO_8_4RE_UBC
 
         public ResultCode ReadRegister(Pca9535.Register register, byte[] value, int index, int length)
         {
-            return ioExpander?.ReadRegister(register, value, index, length) ?? ResultCode.FatalError;
+            // return ioExpander?.ReadRegister(register, value, index, length) ?? ResultCode.FatalError;    // C# 6.0 or later
+            if (ioExpander == null)
+                return ResultCode.FatalError;
+            return ioExpander.ReadRegister(register, value, index, length);
         }
 
         private static void PinToDevicePin(int pin, out int devicePort, out int devicePin)
@@ -133,7 +132,10 @@ namespace DIO_8_4RE_UBC
 
         private ResultCode IoExpanderSetPortDirection(int port, byte[] value, int index, int length)
         {
-            return ioExpander?.SetPortDirection(port, value, index, length) ?? ResultCode.FatalError;
+            // return ioExpander?.SetPortDirection(port, value, index, length) ?? ResultCode.FatalError;    // C# 6.0 or later
+            if (ioExpander == null)
+                return ResultCode.FatalError;
+            return ioExpander.SetPortDirection(port, value, index, length);
         }
 
         private ResultCode IoExpanderReadPort(int port, out byte value)
@@ -144,12 +146,26 @@ namespace DIO_8_4RE_UBC
 
         private ResultCode IoExpanderWritePort(int port, byte[] value, int index, int length)
         {
-            return ioExpander?.WritePort(port, value, index, length) ?? ResultCode.FatalError;
+            // return ioExpander?.WritePort(port, value, index, length) ?? ResultCode.FatalError;   // C# 6.0 or later
+            if (ioExpander == null)
+                return ResultCode.FatalError;
+            return ioExpander.WritePort(port, value, index, length);
+        }
+
+        private ResultCode IoExpanderWritePort(int port, byte value)
+        {
+            // return ioExpander?.WritePort(port, value) ?? ResultCode.FatalError;  // C# 6.0 or later
+            if (ioExpander == null)
+                return ResultCode.FatalError;
+            return ioExpander.WritePort(port, value);
         }
 
         private ResultCode IoExpanderWritePin(int port, int pin, bool state)
         {
-            return ioExpander?.WritePin(port, pin, state) ?? ResultCode.FatalError;
+            // return ioExpander?.WritePin(port, pin, state) ?? ResultCode.FatalError;  // C# 6.0 or later
+            if (ioExpander == null)
+                return ResultCode.FatalError;
+            return ioExpander.WritePin(port, pin, state);
         }
     }
 }

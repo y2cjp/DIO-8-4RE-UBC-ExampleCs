@@ -50,7 +50,7 @@ namespace DIO_8_4RE_UBC
             if (ioExpander == null)
                 return ResultCode.FatalError;
 
-            var result = ioExpander.WritePort(0, 0xff);
+            ResultCode result = ioExpander.WritePort(0, 0xff);
             if (result != ResultCode.Ok)
                 return result;
 
@@ -74,7 +74,7 @@ namespace DIO_8_4RE_UBC
             if (ioExpander == null)
                 return ResultCode.FatalError;
 
-            var result = ioExpander.ReadPort(1, out value);
+            ResultCode result = ioExpander.ReadPort(1, out value);
             value = (byte)~value;
             return result;
         }
@@ -82,14 +82,14 @@ namespace DIO_8_4RE_UBC
         public ResultCode ReadPin(int pin, out PinState pinState)
         {
             pinState = PinState.Off;
-            if (pin < 0 || pin > 7)
+            if (pin < 0 || 7 < pin)
                 return ResultCode.InvalidParameter;
 
             bool state;
             if (ioExpander == null)
                 return ResultCode.FatalError;
 
-            var result = ioExpander.ReadPin(1, (byte)pin, out state);
+            ResultCode result = ioExpander.ReadPin(1, (byte)pin, out state);
             pinState = state == false ? PinState.On : PinState.Off;
             return result;
         }
@@ -98,7 +98,7 @@ namespace DIO_8_4RE_UBC
         {
             if (!IsInitialized)
             {
-                var result = Initialize();
+                ResultCode result = Initialize();
                 if (result != ResultCode.Ok)
                     return result;
             }
@@ -112,11 +112,11 @@ namespace DIO_8_4RE_UBC
 
         public ResultCode WritePin(int pin, PinState pinState)
         {
-            if (pin < 0 || pin > 3)
+            if (pin < 0 || 3 < pin)
                 return ResultCode.InvalidParameter;
             if (!IsInitialized)
             {
-                var result = Initialize();
+                ResultCode result = Initialize();
                 if (result != ResultCode.Ok)
                     return result;
             }
@@ -145,12 +145,18 @@ namespace DIO_8_4RE_UBC
 
         private ResultCode IoExpanderWritePort(int port, byte value)
         {
-            return ioExpander?.WritePort(port, value) ?? ResultCode.FatalError;
+            // return ioExpander?.WritePort(port, value) ?? ResultCode.FatalError;  // C# 6.0 or later
+            if (ioExpander == null)
+                return ResultCode.FatalError;
+            return ioExpander.WritePort(port, value);
         }
 
         private ResultCode IoExpanderWritePin(int port, int pin, bool state)
         {
-            return ioExpander?.WritePin(port, pin, state) ?? ResultCode.FatalError;
+            // return ioExpander?.WritePin(port, pin, state) ?? ResultCode.FatalError;  // C# 6.0 or later
+            if (ioExpander == null)
+                return ResultCode.FatalError;
+            return ioExpander.WritePin(port, pin, state);
         }
     }
 }
