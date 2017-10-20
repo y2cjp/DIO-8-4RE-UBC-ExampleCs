@@ -28,6 +28,8 @@ using System.Windows.Forms;
 
 namespace DIO_8_4RE_UBC
 {
+    using System.Threading;
+
     public partial class Form1 : Form
     {
         private I2CFt4222 i2C;
@@ -335,6 +337,69 @@ namespace DIO_8_4RE_UBC
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             I2CClose();
+        }
+
+        /// <summary>
+        /// DCモーター駆動テスト
+        /// </summary>
+        private void adafruit2348TestButton_Click(object sender, EventArgs e)
+        {
+            ResultCode result;
+            if (i2C == null)
+            {
+                result = I2COpen();
+                if (result != ResultCode.Ok)
+                    return;
+            }
+
+            Println("DC Motor Test: Start");
+            TestAdafruit2348 test = new TestAdafruit2348(i2C);
+            result = test.TestDcMotor();
+            if (result != ResultCode.Ok)
+                MessageBox.Show(result.ToString());
+            else
+                Println("DC Motor Test: Finish");
+        }
+
+        /// <summary>
+        /// OLEDディスプレイ表示テスト
+        /// </summary>
+        private void mikroe1649TestButton_Click(object sender, EventArgs e)
+        {
+            ResultCode result;
+
+            // if (!dio84Re?.IsInitialized != true)         // C# 6.0 or later
+            if (dio84Re == null || !dio84Re.IsInitialized)
+            {
+                result = Dio84ReInitialize();
+                if (result != ResultCode.Ok)
+                    return;
+            }
+
+            result = dio84Re.SetMikroBusResetPin(Dio84.PinState.On);
+            if (result != ResultCode.Ok)
+            {
+                MessageBox.Show(result.ToString());
+                return;
+            }
+            Thread.Sleep(1);
+
+            result = dio84Re.SetMikroBusResetPin(Dio84.PinState.Off);
+            if (result != ResultCode.Ok)
+            {
+                MessageBox.Show(result.ToString());
+                return;
+            }
+            Println("OLED Module Reset: OK");
+            Thread.Sleep(100);
+
+            Println("OLED Test: Start");
+            TestMikroe1649 test = new TestMikroe1649(i2C, 0x3c);
+            result = test.TestPicture();
+            if (result != ResultCode.Ok)
+                MessageBox.Show(result.ToString());
+            else
+                Println("OLED Test: Finish");
         }
     }
 }

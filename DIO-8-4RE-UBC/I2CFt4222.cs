@@ -159,9 +159,9 @@ namespace DIO_8_4RE_UBC
             return (ResultCode)LibFt4222.Ft4222Status.Ft4222Ok;
         }
 
-        public ResultCode Read(ushort slaveAddress, ref byte buffer, int bytesToRead)
+        public ResultCode Read(ushort deviceAddress, ref byte buffer, int bytesToRead)
         {
-            return ReadEx(slaveAddress, (byte)LibFt4222.I2CMasterFlag.StartAndStop, ref buffer, bytesToRead);
+            return ReadEx(deviceAddress, (byte)LibFt4222.I2CMasterFlag.StartAndStop, ref buffer, bytesToRead);
         }
 
         public ResultCode WriteEx(ushort deviceAddress, byte flag, ref byte buffer, int bytesToWrite)
@@ -227,9 +227,9 @@ namespace DIO_8_4RE_UBC
 #endif
         }
 
-        public ResultCode Write(ushort slaveAddress, ref byte buffer, int bytesToWrite)
+        public ResultCode Write(ushort deviceAddress, ref byte buffer, int bytesToWrite)
         {
-            return WriteEx(slaveAddress, (byte)LibFt4222.I2CMasterFlag.StartAndStop, ref buffer, bytesToWrite);
+            return WriteEx(deviceAddress, (byte)LibFt4222.I2CMasterFlag.StartAndStop, ref buffer, bytesToWrite);
         }
 
         public ResultCode GetStatus(ref byte controllerStatus)
