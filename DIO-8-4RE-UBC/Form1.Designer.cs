@@ -53,10 +53,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dio84rdWriteTextBox = new System.Windows.Forms.TextBox();
             this.dio84rdWriteButton = new System.Windows.Forms.Button();
+            this.adafruit2348TestButton = new System.Windows.Forms.Button();
+            this.mikroe1649TestButton = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // dio84reInitializeButton
@@ -130,7 +136,7 @@
             this.printTextBox.Name = "printTextBox";
             this.printTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.printTextBox.Size = new System.Drawing.Size(208, 440);
-            this.printTextBox.TabIndex = 5;
+            this.printTextBox.TabIndex = 20;
             // 
             // groupBox1
             // 
@@ -348,11 +354,53 @@
             this.dio84rdWriteButton.UseVisualStyleBackColor = true;
             this.dio84rdWriteButton.Click += new System.EventHandler(this.dio84rdWriteButton_Click);
             // 
+            // adafruit2348TestButton
+            // 
+            this.adafruit2348TestButton.Location = new System.Drawing.Point(16, 24);
+            this.adafruit2348TestButton.Name = "adafruit2348TestButton";
+            this.adafruit2348TestButton.Size = new System.Drawing.Size(128, 24);
+            this.adafruit2348TestButton.TabIndex = 1;
+            this.adafruit2348TestButton.Text = "DCモーター制御テスト";
+            this.adafruit2348TestButton.UseVisualStyleBackColor = true;
+            this.adafruit2348TestButton.Click += new System.EventHandler(this.adafruit2348TestButton_Click);
+            // 
+            // mikroe1649TestButton
+            // 
+            this.mikroe1649TestButton.Location = new System.Drawing.Point(16, 24);
+            this.mikroe1649TestButton.Name = "mikroe1649TestButton";
+            this.mikroe1649TestButton.Size = new System.Drawing.Size(128, 24);
+            this.mikroe1649TestButton.TabIndex = 1;
+            this.mikroe1649TestButton.Text = "ディスプレイ表示テスト";
+            this.mikroe1649TestButton.UseVisualStyleBackColor = true;
+            this.mikroe1649TestButton.Click += new System.EventHandler(this.mikroe1649TestButton_Click);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.adafruit2348TestButton);
+            this.groupBox5.Location = new System.Drawing.Point(232, 328);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(152, 56);
+            this.groupBox5.TabIndex = 10;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "DC Motor HAT [Adafruit]";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.mikroe1649TestButton);
+            this.groupBox6.Location = new System.Drawing.Point(232, 392);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(152, 56);
+            this.groupBox6.TabIndex = 11;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "OLED W click [MikroE]";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(554, 457);
+            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -369,6 +417,8 @@
             this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -404,6 +454,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox dio84rdWriteTextBox;
         private System.Windows.Forms.Button dio84rdWriteButton;
+        private System.Windows.Forms.Button adafruit2348TestButton;
+        private System.Windows.Forms.Button mikroe1649TestButton;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox groupBox6;
     }
 }
 

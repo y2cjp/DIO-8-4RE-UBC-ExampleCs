@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adafruit2348.cs" />
     <Compile Include="Ads1115.cs" />
     <Compile Include="Aio320.cs" />
     <Compile Include="Dio016.cs" />
@@ -64,9 +65,13 @@
     <Compile Include="LibFt4222.cs" />
     <Compile Include="Pca9535.cs" />
     <Compile Include="Pca9554.cs" />
+    <Compile Include="Pca9685.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultCode.cs" />
+    <Compile Include="Ssd1306.cs" />
+    <Compile Include="TestAdafruit2348.cs" />
+    <Compile Include="TestMikroe1649.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
