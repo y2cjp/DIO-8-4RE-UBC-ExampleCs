@@ -1,7 +1,7 @@
 # DIO-8/4RE-UBC サンプル（Visual C#)
 
 USB-I2C変換ボード（[DIO-8/4RE-UBC](https://www.y2c.co.jp/i2c-r/dio-8-4re-ubc.html) ）のサンプルです。  
-他の言語にも移植しやすいように、C#特有の機能（var, null演算子など）は極力使用しないようにしています。
+他の言語にも移植しやすいように、C#特有の機能（例外, var, null演算子など）は極力使用しないようにしています。
 
 [使用方法](https://www.y2c.co.jp/i2c-r/dio-8-4re-ubc/windows.html)  
 
