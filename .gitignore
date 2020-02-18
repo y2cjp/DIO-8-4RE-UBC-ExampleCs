@@ -251,6 +251,6 @@ paket-files/
 .idea/
 *.sln.iml
 
-DIO-8-4RE-UBC/bin/Debug/*
-ExampleVb/bin/Debug/*
-!*.dll
+Dio84ReUbc.AppCs/bin/
+Dio84ReUbc.AppVb/bin/
+Dio84ReUbc.Library/bin/

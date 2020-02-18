@@ -1,7 +1,15 @@
-# DIO-8/4RE-UBC サンプル（Visual C#)
+# DIO-8/4RE-UBC サンプル
 
 USB-I2C変換ボード（[DIO-8/4RE-UBC](https://www.y2c.co.jp/i2c-r/dio-8-4re-ubc.html) ）のサンプルです。  
-他の言語にも移植しやすいように、C#特有の機能（例外, var, null演算子など）は極力使用しないようにしています。
+ライブラリは、他の言語にも移植しやすいように、C#特有の機能（例外, var, null演算子など）は極力使用しないようにしています。
+
+フォルダ構成
+
+プロジェクト名|概要|説明
+---|---|---
+Dio84ReUbc.Library|ライブラリ|Visual C#で作成されています。
+Dio84ReUbc.AppCs|アプリケーション|Visual C#からの使用例です。
+Dio84ReUbc.AppVb|アプリケーション|Visual Basicからの使用例です。
 
 [使用方法](https://www.y2c.co.jp/i2c-r/dio-8-4re-ubc/windows.html)  
 

@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{744A7A57-8AEF-4A97-B433-8EB0B0871A6B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>DIO_8_4RE_UBC_VB.My.MyApplication</StartupObject>
-    <RootNamespace>DIO_8_4RE_UBC_VB</RootNamespace>
-    <AssemblyName>DIO-8-4RE-UBC_VB</AssemblyName>
+    <StartupObject>Dio84ReUbc.AppVb.My.MyApplication</StartupObject>
+    <RootNamespace>Dio84ReUbc.AppVb</RootNamespace>
+    <AssemblyName>Dio84ReUbc.AppVb</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>DIO-8-4RE-UBC_VB.xml</DocumentationFile>
+    <DocumentationFile>Dio84ReUbc.AppVb.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>DIO-8-4RE-UBC_VB.xml</DocumentationFile>
+    <DocumentationFile>Dio84ReUbc.AppVb.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -98,6 +98,7 @@
   <ItemGroup>
     <EmbeddedResource Include="FormVb.resx">
       <DependentUpon>FormVb.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -119,15 +120,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DIO-8-4RE-UBC\DIO-8-4RE-UBC.csproj">
+    <ProjectReference Include="..\Dio84ReUbc.Library\Dio84ReUbc.Library.csproj">
       <Project>{4ac89342-869c-408a-9e59-5a76ad5d57d6}</Project>
-      <Name>DIO-8-4RE-UBC</Name>
+      <Name>Dio84ReUbc.Library</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="LibFT4222.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

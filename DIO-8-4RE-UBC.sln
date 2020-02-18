@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIO-8-4RE-UBC", "DIO-8-4RE-UBC\DIO-8-4RE-UBC.csproj", "{4AC89342-869C-408A-9E59-5A76AD5D57D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dio84ReUbc.Library", "Dio84ReUbc.Library\Dio84ReUbc.Library.csproj", "{4AC89342-869C-408A-9E59-5A76AD5D57D6}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DIO-8-4RE-UBC_VB", "ExampleVb\DIO-8-4RE-UBC_VB.vbproj", "{744A7A57-8AEF-4A97-B433-8EB0B0871A6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dio84ReUbc.AppCs", "Dio84ReUbc.AppCs\Dio84ReUbc.AppCs.csproj", "{B6CE867B-3EA1-4344-AD64-B79CF3C3D17C}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Dio84ReUbc.AppVb", "Dio84ReUbc.AppVb\Dio84ReUbc.AppVb.vbproj", "{744A7A57-8AEF-4A97-B433-8EB0B0871A6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{4AC89342-869C-408A-9E59-5A76AD5D57D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AC89342-869C-408A-9E59-5A76AD5D57D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AC89342-869C-408A-9E59-5A76AD5D57D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6CE867B-3EA1-4344-AD64-B79CF3C3D17C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6CE867B-3EA1-4344-AD64-B79CF3C3D17C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6CE867B-3EA1-4344-AD64-B79CF3C3D17C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6CE867B-3EA1-4344-AD64-B79CF3C3D17C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{744A7A57-8AEF-4A97-B433-8EB0B0871A6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{744A7A57-8AEF-4A97-B433-8EB0B0871A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{744A7A57-8AEF-4A97-B433-8EB0B0871A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU

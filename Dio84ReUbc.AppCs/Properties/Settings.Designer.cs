@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DIO_8_4RE_UBC.Properties {
+namespace Dio84ReUbc.AppCs.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
