@@ -227,6 +227,12 @@ namespace DIO_8_4RE_UBC
 #endif
         }
 
+        public ResultCode Write(ushort deviceAddress, ushort wordData)
+        {
+            byte[] buffer = { (byte)((wordData >> 8) & 0xff), (byte)(wordData & 0xff) };
+            return Write(deviceAddress, ref buffer[0], 2);
+        }
+
         public ResultCode Write(ushort deviceAddress, ref byte buffer, int bytesToWrite)
         {
             return WriteEx(deviceAddress, (byte)LibFt4222.I2CMasterFlag.StartAndStop, ref buffer, bytesToWrite);

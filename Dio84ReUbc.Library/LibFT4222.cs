@@ -190,6 +190,7 @@ namespace DIO_8_4RE_UBC
             A = 0x42220100,
             B = 0x42220200,
             C = 0x42220300,
+            D = 0x42220400,
             Max = 0x4222ffff,
         }
 
