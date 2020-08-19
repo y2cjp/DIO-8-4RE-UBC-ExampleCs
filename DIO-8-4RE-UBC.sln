@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dio84ReUbc.Library", "Dio84ReUbc.Library\Dio84ReUbc.Library.csproj", "{4AC89342-869C-408A-9E59-5A76AD5D57D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dio84ReUbc.CoreSample", "Dio84ReUbc.CoreSample\Dio84ReUbc.CoreSample.csproj", "{09E82674-BD06-4F4B-BEB6-2A0B11FA6815}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dio84ReUbc.AppCs", "Dio84ReUbc.AppCs\Dio84ReUbc.AppCs.csproj", "{B6CE867B-3EA1-4344-AD64-B79CF3C3D17C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dio84ReUbc.CoreSampleWpf", "Dio84ReUbc.CoreSampleWpf\Dio84ReUbc.CoreSampleWpf.csproj", "{CCA7EE37-1E9A-4413-AFE0-80A458EF0C84}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Dio84ReUbc.AppVb", "Dio84ReUbc.AppVb\Dio84ReUbc.AppVb.vbproj", "{744A7A57-8AEF-4A97-B433-8EB0B0871A6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dio84ReUbc.NfLibrary", "Dio84ReUbc.NfLibrary\Dio84ReUbc.NfLibrary.csproj", "{4AC89342-869C-408A-9E59-5A76AD5D57D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dio84ReUbc.NfSample", "Dio84ReUbc.NfSample\Dio84ReUbc.NfSample.csproj", "{EA3433A8-A588-4B86-8BCC-0128DAAE98DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dio84ReUbc.NfSampleWinform", "Dio84ReUbc.NfSampleWinform\Dio84ReUbc.NfSampleWinform.csproj", "{B6CE867B-3EA1-4344-AD64-B79CF3C3D17C}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Dio84ReUbc.NfSampleWinformVb", "Dio84ReUbc.NfSampleWinformVb\Dio84ReUbc.NfSampleWinformVb.vbproj", "{744A7A57-8AEF-4A97-B433-8EB0B0871A6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +21,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{09E82674-BD06-4F4B-BEB6-2A0B11FA6815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09E82674-BD06-4F4B-BEB6-2A0B11FA6815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09E82674-BD06-4F4B-BEB6-2A0B11FA6815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09E82674-BD06-4F4B-BEB6-2A0B11FA6815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCA7EE37-1E9A-4413-AFE0-80A458EF0C84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCA7EE37-1E9A-4413-AFE0-80A458EF0C84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCA7EE37-1E9A-4413-AFE0-80A458EF0C84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCA7EE37-1E9A-4413-AFE0-80A458EF0C84}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4AC89342-869C-408A-9E59-5A76AD5D57D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4AC89342-869C-408A-9E59-5A76AD5D57D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AC89342-869C-408A-9E59-5A76AD5D57D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AC89342-869C-408A-9E59-5A76AD5D57D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA3433A8-A588-4B86-8BCC-0128DAAE98DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA3433A8-A588-4B86-8BCC-0128DAAE98DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA3433A8-A588-4B86-8BCC-0128DAAE98DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA3433A8-A588-4B86-8BCC-0128DAAE98DE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B6CE867B-3EA1-4344-AD64-B79CF3C3D17C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B6CE867B-3EA1-4344-AD64-B79CF3C3D17C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6CE867B-3EA1-4344-AD64-B79CF3C3D17C}.Release|Any CPU.ActiveCfg = Release|Any CPU
