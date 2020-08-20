@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Authors>Y2 Corporation</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Y2.Dio84ReUbc.Core" Version="1.0.1" />
+  </ItemGroup>
+
+</Project>

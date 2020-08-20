@@ -251,6 +251,10 @@ paket-files/
 .idea/
 *.sln.iml
 
-Dio84ReUbc.AppCs/bin/
-Dio84ReUbc.AppVb/bin/
-Dio84ReUbc.Library/bin/
+Dio84ReUbc.CoreLibrary/bin/
+Dio84ReUbc.CoreSample/bin/
+Dio84ReUbc.CoreSampleWpf/bin/
+Dio84ReUbc.NfLibrary/bin/
+Dio84ReUbc.NfSample/bin/
+Dio84ReUbc.NfSampleWinform/bin/
+Dio84ReUbc.NfSampleWinformVb/bin/

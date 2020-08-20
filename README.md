@@ -1,17 +1,31 @@
 # DIO-8/4RE-UBC サンプル
 
 USB-I2C変換ボード（[DIO-8/4RE-UBC](https://www.y2c.co.jp/i2c-r/dio-8-4re-ubc.html) ）のサンプルです。  
-ライブラリは、他の言語にも移植しやすいように、C#特有の機能（例外, var, null演算子など）は極力使用しないようにしています。
 
-フォルダ構成
+### フォルダ構成
 
-プロジェクト名|概要|説明
----|---|---
-Dio84ReUbc.Library|ライブラリ|Visual C#で作成されています。
-Dio84ReUbc.AppCs|アプリケーション|Visual C#からの使用例です。
-Dio84ReUbc.AppVb|アプリケーション|Visual Basicからの使用例です。
+プロジェクト名|フレームワーク|UI|概要|言語|注記
+---|---|---|---|---|---
+Dio84ReUbc.CoreSample|.NET  Core|-|サンプルアプリケーション<br>（UI非依存部分）|C#|※1
+Dio84ReUbc.CoreSampleWpf|.NET  Core|WPF|サンプルアプリケーション|C#|※1
+Dio84ReUbc.NfLibrary|.NET  Framework|-|ライブラリ|C#|※2
+Dio84ReUbc.NfSample|.NET  Framework|-|サンプルアプリケーション<br>（UI非依存部分）|C#|-
+Dio84ReUbc.NfSampleWinform|.NET  Framework|WinForms|サンプルアプリケーション|C#|-
+Dio84ReUbc.NfSampleWinformVb|.NET  Framework|WinForms|サンプルアプリケーション|Visual Basic|-
 
-[使用方法](https://www.y2c.co.jp/i2c-r/dio-8-4re-ubc/windows.html)  
+
+※1  
+
+.NET Core（クロスプラットフォーム）に対応しています。  
+今後の機能拡張などはこちらを優先しておこないます。  
+フレームワークに制約がないのであれば、こちらをお使いいただくのがおすすめです。
+
+※2  
+
+.NET Frameworkに対応したライブラリです。  
+C#の古いバージョンや他の言語にも移植しやすいように、C#特有の機能（例外・継承・var・null演算子など）は極力使用しないようにしています。
+
+### [使用方法](https://www.y2c.co.jp/i2c-r/dio-8-4re-ubc/windows.html)  
 
 使用例
 
