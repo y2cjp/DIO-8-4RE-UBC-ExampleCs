@@ -8,7 +8,7 @@ using FTD2XX_NET;
 
 namespace Dio84ReUbc.NfLibrary
 {
-    public class LibFt4222
+    public static class LibFt4222
     {
         // FT4222 Device status
         public enum Ft4222Status
@@ -75,6 +75,7 @@ namespace Dio84ReUbc.NfLibrary
             Ft4222SpiSlave,
         }
 
+        [Flags]
         public enum Ft4222SpiMode
         {
             SpiIoNone = 0,
@@ -131,6 +132,7 @@ namespace Dio84ReUbc.NfLibrary
             GpioInput,
         }
 
+        [Flags]
         public enum GpioTrigger
         {
             TriggerRising = 0x01,

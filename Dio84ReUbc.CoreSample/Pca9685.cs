@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using System.Threading;
-using Iot.Device.Ft4222;
 using Y2.Ft4222.Core;
 
 namespace Dio84ReUbc.CoreSample
@@ -41,7 +40,7 @@ namespace Dio84ReUbc.CoreSample
             if (frequency < 24)
                 frequency = 24;
 
-            byte prescale = (byte)((float)25000000 / 4096 / frequency - 1);
+            var prescale = (byte)((float)25000000 / 4096 / frequency - 1);
             if (prescale < 3)
                 prescale = 3;
 
@@ -66,11 +65,11 @@ namespace Dio84ReUbc.CoreSample
         public void ReadRegister(Register register, byte[] values, int index, int length)
         {
             ReadOnlySpan<byte> writeBuffer = stackalloc byte[] { (byte)register };
-            WriteEx(I2cMasterFlag.Start, writeBuffer);
+            WriteEx(I2cMasterFlags.Start, writeBuffer);
             if (values == null)
                 throw new ArgumentNullException(nameof(values));
 
-            ReadEx(I2cMasterFlag.RepeatedStart | I2cMasterFlag.Stop, values);
+            ReadEx(I2cMasterFlags.RepeatedStart | I2cMasterFlags.Stop, values);
         }
 
         public void WriteRegister(Register register, byte[] values)

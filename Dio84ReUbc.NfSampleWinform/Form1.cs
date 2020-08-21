@@ -168,7 +168,7 @@ namespace Dio84ReUbc.NfSampleWinform
 
             // if (!dio84Rd?.IsInitialized != true)         // C# 6.0 or later
             if (dio84Rd == null || !dio84Rd.IsInitialized)
-                {
+            {
                 result = Dio84RdInitialize();
                 if (result != ResultCode.Ok)
                     return;
