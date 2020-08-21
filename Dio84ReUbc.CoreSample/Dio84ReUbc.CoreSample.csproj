@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Y2.Dio84ReUbc.Core" Version="1.0.1" />
+    <PackageReference Include="Y2.Dio84ReUbc.Core" Version="1.0.2" />
   </ItemGroup>
 
 </Project>

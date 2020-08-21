@@ -21,6 +21,7 @@ namespace Dio84ReUbc.NfLibrary
             _slaveAddress = slaveAddress;
         }
 
+        [Flags]
         public enum Register : byte
         {
             InputPort0 = 0x00,
