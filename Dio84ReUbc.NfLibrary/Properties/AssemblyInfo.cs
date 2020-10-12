@@ -10,12 +10,12 @@ using System.Runtime.InteropServices;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("DIO-8_4RE-UBC")]
+[assembly: AssemblyTitle("Dio84ReUbc.NfLibrary")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DIO-8_4RE-UBC")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCompany("Y2 Corporation")]
+[assembly: AssemblyProduct("Dio84ReUbc.NfLibrary")]
+[assembly: AssemblyCopyright("Copyright ©  2020 Y2 Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
