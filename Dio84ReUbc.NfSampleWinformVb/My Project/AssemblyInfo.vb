@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' アセンブリ属性の値を確認します
 
-<Assembly: AssemblyTitle("DIO-8-4RE-UBC_VB")>
+<Assembly: AssemblyTitle("Dio84ReUbc.NfSampleWinformVb")>
 <Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("DIO-8-4RE-UBC_VB")>
+<Assembly: AssemblyCompany("Y2 Corporation")>
+<Assembly: AssemblyProduct("Dio84ReUbc.NfSampleWinformVb")>
 <Assembly: AssemblyCopyright("Copyright ©  2020")>
 <Assembly: AssemblyTrademark("")>
 
