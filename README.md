@@ -8,7 +8,7 @@
 Dio84ReUbc.Nfで始まるプロジェクトが以前のプロジェクトです。
 古いバージョンが必要な場合は以前のバージョンを使用してください。
 
-* [.NET Core対応前の最終バージョン（1.1.0）](https://github.com/y2cjp/DIO-8-4RE-UBC-ExampleCs/tree/1.1.0)
+* [.NET Core対応前の最終バージョン（1.1.1）](https://github.com/y2cjp/DIO-8-4RE-UBC-ExampleCs/tree/1.1.1)
 
 ### フォルダ構成
 
