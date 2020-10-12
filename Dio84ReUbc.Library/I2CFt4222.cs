@@ -53,21 +53,30 @@ namespace DIO_8_4RE_UBC
             uint numOfDevices = 0;
             LibFt4222.NativeMethods.FT_CreateDeviceInfoList(ref numOfDevices);
 
-            if (numOfDevices > 0)
+            if (numOfDevices <= 0)
+            {
+                Debug.Print("No FTDI device");
+                return ResultCode.DeviceNotFound;
+            }
+
+            Debug.Print("Device Number: " + numOfDevices);
+
+            for (uint i = 0; i < numOfDevices; i++)
             {
                 byte[] serialNumber = new byte[16];
                 byte[] desc = new byte[64];
 
-                LibFt4222.NativeMethods.FT_GetDeviceInfoDetail(0, ref devInfo.Flags, ref devInfo.Type, ref devInfo.ID, ref devInfo.LocId, serialNumber, desc, ref devInfo.ftHandle);
+                LibFt4222.NativeMethods.FT_GetDeviceInfoDetail(i, ref devInfo.Flags, ref devInfo.Type, ref devInfo.ID, ref devInfo.LocId, serialNumber, desc, ref devInfo.ftHandle);
 
                 devInfo.SerialNumber = Encoding.ASCII.GetString(serialNumber, 0, 16);
                 devInfo.Description = Encoding.ASCII.GetString(desc, 0, 64);
                 devInfo.SerialNumber = devInfo.SerialNumber.Substring(0, devInfo.SerialNumber.IndexOf("\0", StringComparison.Ordinal));
                 devInfo.Description = devInfo.Description.Substring(0, devInfo.Description.IndexOf("\0", StringComparison.Ordinal));
-
-                Debug.Print("Device Number: " + numOfDevices);
+                if (devInfo.Description.Contains("FT4222"))
+                    break;
             }
-            else
+
+            if (!devInfo.Description.Contains("FT4222"))
             {
                 Debug.Print("No FTDI device");
                 return ResultCode.DeviceNotFound;
